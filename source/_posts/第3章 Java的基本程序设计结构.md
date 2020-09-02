@@ -19,9 +19,7 @@ categories:
 
 {% img [测试255] /custom_source/images/测试255.png %}
 
-所以只要结果不溢出，即大于255，可以将其视为无符号数并进行加减乘的运算。若要得到它的无符号值，可以使用toUnsignedxxx方法；除此之外，可以使用var & 0xff的方法，原理是在进行&操作时，两个操作数隐式的转换到int，0xff的高3字节全部填充0，经过&把var的高3字节置0了，结果将var的补码视为一个正数的原码（正数原码等于补码），起到unsigned的效果。测试如下：
-
-{% img [测试&] /custom_source/images/测试&.png %}
+所以只要结果不溢出，即大于255，可以将其视为无符号数并进行加减乘的运算。若要得到它的无符号值，可以使用toUnsignedxxx方法；除此之外，可以使用var & 0xff的方法，原理是在进行&操作时，两个操作数隐式的转换到int，0xff的高3字节全部填充0，经过&把var的高3字节置0了，结果将var的补码视为一个正数的原码（正数原码等于补码），起到unsigned的效果。
 
 通过查看Byte.toUnsignedInt方法的源码，可以看到做法正是这样：
 
@@ -29,4 +27,6 @@ categories:
 
 通过源码的注释可以知道，这样操作后，负数相当于加了0x100(2<sup>8</sup>)。
 
-TODO：String和Unicode字符；System.out.printf的格式化参数
+有关char类型和String：{% link Java中的字符编码 https://yuzelin.github.io/2020/09/02/Java%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/ true Java中的字符编码 %}
+
+TODO：System.out.printf的格式化参数

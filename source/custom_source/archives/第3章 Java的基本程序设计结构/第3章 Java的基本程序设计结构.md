@@ -27,4 +27,6 @@ categories:
 
 通过源码的注释可以知道，这样操作后，负数相当于加了0x100(2<sup>8</sup>)。
 
-TODO：String和Unicode字符；System.out.printf的格式化参数
+有关char类型和String：{% link Java中的字符编码 https://yuzelin.github.io/2020/09/02/Java%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/ true Java中的字符编码 %}
+
+TODO：System.out.printf的格式化参数
