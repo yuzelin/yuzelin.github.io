@@ -24,26 +24,23 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="这是一些零碎的知识点，记录如下：   对其中的unsigned部分，做一个小的记录。以下以8位的byte为例。 首先是二进制算数运算，计算机内部数字是采用补码的方式存储的，因此，byte变量可以存储0x0-0xff的数，只不过若直接输出，只会输出有符号的形式。对0xff（255），若视为有符号的byte，是-1的补码，则会输出-1：   所以只要结果不溢出，即大于255，可以将其视为无符号数并进行">
-<meta property="og:type" content="website">
-<meta property="og:title" content="第3章 Java的基本程序设计结构">
-<meta property="og:url" content="http://yoursite.com/custom_source/archives/%E7%AC%AC3%E7%AB%A0%20Java%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%BB%93%E6%9E%84/%E7%AC%AC3%E7%AB%A0%20Java%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%BB%93%E6%9E%84.html">
+  <meta name="description" content="&amp;emsp;&amp;emsp;在看Core Java时，看到char类型一节，发现Java中的char与C中的char完全不同，它与Unicode编码有关系。为了弄清楚这个问题，查看了一些资料，记录如下。 首先是编码问题，通过以下两篇文章有了比较清晰的认识： 字符编码笔记：ASCII，Unicode 和 UTF-8  程序员必备：彻底弄懂常见的7种中文字符编码  所以不再赘述。 再说Java和Unico">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java中的字符编码">
+<meta property="og:url" content="http://yoursite.com/2020/09/02/Java%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/index.html">
 <meta property="og:site_name" content="Yu Zelin&#39;s Learning Notes">
-<meta property="og:description" content="这是一些零碎的知识点，记录如下：   对其中的unsigned部分，做一个小的记录。以下以8位的byte为例。 首先是二进制算数运算，计算机内部数字是采用补码的方式存储的，因此，byte变量可以存储0x0-0xff的数，只不过若直接输出，只会输出有符号的形式。对0xff（255），若视为有符号的byte，是-1的补码，则会输出-1：   所以只要结果不溢出，即大于255，可以将其视为无符号数并进行">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;在看Core Java时，看到char类型一节，发现Java中的char与C中的char完全不同，它与Unicode编码有关系。为了弄清楚这个问题，查看了一些资料，记录如下。 首先是编码问题，通过以下两篇文章有了比较清晰的认识： 字符编码笔记：ASCII，Unicode 和 UTF-8  程序员必备：彻底弄懂常见的7种中文字符编码  所以不再赘述。 再说Java和Unico">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/custom_source/images/%E5%9F%BA%E6%9C%AC%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%BB%93%E6%9E%84.png">
-<meta property="og:image" content="http://yoursite.com/custom_source/images/%E6%B5%8B%E8%AF%95255.png">
-<meta property="og:image" content="http://yoursite.com/custom_source/images/Byte.toUnsignedInt.png">
-<meta property="article:published_time" content="2020-09-01T08:06:10.000Z">
-<meta property="article:modified_time" content="2020-09-01T09:21:32.215Z">
+<meta property="article:published_time" content="2020-09-02T05:16:57.000Z">
+<meta property="article:modified_time" content="2020-09-02T14:05:32.492Z">
 <meta property="article:author" content="Yu Zelin">
-<meta property="article:tag" content="reading notes">
-<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Character encoding">
+<meta property="article:tag" content="Unicode Transformation Formats(UTF)">
+<meta property="article:tag" content="UTF-16">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/custom_source/images/%E5%9F%BA%E6%9C%AC%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%BB%93%E6%9E%84.png">
 
 
-<link rel="canonical" href="http://yoursite.com/custom_source/archives/%E7%AC%AC3%E7%AB%A0%20Java%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%BB%93%E6%9E%84/%E7%AC%AC3%E7%AB%A0%20Java%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%BB%93%E6%9E%84">
+<link rel="canonical" href="http://yoursite.com/2020/09/02/Java%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/">
 
 
 <script class="page-configurations">
@@ -51,13 +48,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>第3章 Java的基本程序设计结构 | Yu Zelin's Learning Notes
-</title>
+  <title>Java中的字符编码 | Yu Zelin's Learning Notes</title>
   
 
 
@@ -265,73 +261,113 @@
 </noscript>
 
 
-    <div class="main-inner page posts-expand">
+    <div class="main-inner post posts-expand">
       
-  
-  
 
       
 
     
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/02/Java%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Yu Zelin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yu Zelin's Learning Notes">
+    </span>
+
     
     
-    <div class="post-block" lang="en">
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java中的字符编码
+        </h1>
 
-<h1 class="post-title" itemprop="name headline">第3章 Java的基本程序设计结构
-</h1>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
 
-<div class="post-meta">
-  
-  <ul class="breadcrumb">
+              <time title="Created: 2020-09-02 13:16:57 / Modified: 22:05:32" itemprop="dateCreated datePublished" datetime="2020-09-02T13:16:57+08:00">2020-09-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/foundation/" itemprop="url" rel="index"><span itemprop="name">foundation</span></a>
+                </span>
+            </span>
+
           
-            <li><a href="/custom_source/">CUSTOM_SOURCE</a></li>
-            <li><a href="/custom_source/archives/">ARCHIVES</a></li>
-            <li><a href="/custom_source/archives/%E7%AC%AC3%E7%AB%A0%20Java%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%BB%93%E6%9E%84/">第3章 JAVA的基本程序设计结构</a></li>
-            <li>第3章 JAVA的基本程序设计结构</li>
-          
-  </ul>
 
-</div>
+        </div>
+      </header>
 
-</header>
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>&emsp;&emsp;在看<em>Core Java</em>时，看到char类型一节，发现Java中的char与C中的char完全不同，它与Unicode编码有关系。为了弄清楚这个问题，查看了一些资料，记录如下。</p>
+<p>首先是编码问题，通过以下两篇文章有了比较清晰的认识：</p>
+<a href="https://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" title="字符编码笔记：ASCII，Unicode 和 UTF-8" target="_blank">字符编码笔记：ASCII，Unicode 和 UTF-8</a><br>
 
-      
-      
-      
-      <div class="post-body">
-          <p>这是一些零碎的知识点，记录如下：</p>
-<img src="/custom_source/images/%E5%9F%BA%E6%9C%AC%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%BB%93%E6%9E%84.png" class="[基本程序设计结构]">
+<a href="https://zhuanlan.zhihu.com/p/46216008" title="程序员必备：彻底弄懂常见的7种中文字符编码" target="_blank">程序员必备：彻底弄懂常见的7种中文字符编码</a>
 
-<p>对其中的unsigned部分，做一个小的记录。以下以8位的byte为例。</p>
-<p>首先是二进制算数运算，计算机内部数字是采用补码的方式存储的，因此，byte变量可以存储0x0-0xff的数，只不过若直接输出，只会输出有符号的形式。对0xff（255），若视为有符号的byte，是-1的补码，则会输出-1：</p>
-<img src="/custom_source/images/%E6%B5%8B%E8%AF%95255.png" class="[测试255]">
+<p>所以不再赘述。</p>
+<p>再说Java和Unicode的关系。Java采用的是<a href="https://en.wikipedia.org/wiki/UTF-16" title="UTF-16" target="_blank">UTF-16</a>编码方式。顾名思义，UTF-16的基本“单元”是16 bits，称之为代码单元（code unit）。而Unicode中的字符对应的代码值称为码点（code point）。Unicode的码点可以分成17个代码平面（<a href="https://en.wikipedia.org/wiki/Plane_(Unicode)" title="Plane(Unicode)" target="_blank">code plane</a>）。第一个代码平面称为基本多语言平面（Basic Multilingual Plane, BMP），码点范围为U+0000-U+FFFF，每个字符只用16 bits即可表示；其余的平面称为辅助平面（Supplementary Planes），码点范围为U+10000-U+10FFFF，用两个连续的代码单元对（surrogate pair）表示。如何知道一个代码单元代表一个码点，还是某个码点的一半（surrogate）呢？</p>
+<p>在Unicode标准中，BMP平面的U+D800-U+DFFF是没有分配字符的，留给UTF-16编码辅助平面中的字符。U+D800-U+DBFF用于high surrogate，U+DC00-U+DFFF用于low surrogate。具体的算法是（<a href="https://en.wikipedia.org/wiki/UTF-16#Code_points_from_U+010000_to_U+10FFFF" title="UTF-16" target="_blank">wikipedia: UTF-16, 2.2</a>）：</p>
+<ul>
+<li>码点U减去0x10000得U’（0x0-0xFFFFF），表示为20 bits；</li>
+<li>U’的高10 bits（0x0-0x3FF）加到0xD800上作为high surrogate。可以看到这样操作下，high surrogate的范围正好是0xD800–0xDBFF；</li>
+<li>U‘的低10bits加到0xDC00上作为low surrogate，范围为0xDC00-0xDFFFF。</li>
+</ul>
+<p>这样，在UTF-16中，就能简单的区分一个代码单元是BMP中码点还是surrogate。Java中的char类型正是描述了UTF-16编码中的一个代码单元。String在JDK 8及以前使用char[]实现，从JDK 9起使用byte[]实现。不管哪一种实现，String中的length方法返回的是代码单元数量。如果包含两单元字符的话，需要使用codePointCount方法得到码点的数量。使用字符𝕆（U+1D546; \uD835\uDD46）测试：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">&quot;𝕆&quot;</span>;</span><br><span class="line">System.out.println(s.length() + <span class="string">&quot; &quot;</span> +</span><br><span class="line">        s.codePointCount(<span class="number">0</span>, s.length()));</span><br></pre></td></tr></table></figure>
 
-<p>所以只要结果不溢出，即大于255，可以将其视为无符号数并进行加减乘的运算。若要得到它的无符号值，可以使用toUnsignedxxx方法；除此之外，可以使用var &amp; 0xff的方法，原理是在进行&amp;操作时，两个操作数隐式的转换到int，0xff的高3字节全部填充0，经过&amp;把var的高3字节置0了，结果将var的补码视为一个正数的原码（正数原码等于补码），起到unsigned的效果。</p>
-<p>通过查看Byte.toUnsignedInt方法的源码，可以看到做法正是这样：</p>
-<img src="/custom_source/images/Byte.toUnsignedInt.png" class="[Byte.toUnsignedInt]">
+<p>结果为：2 1</p>
 
-<p>通过源码的注释可以知道，这样操作后，负数相当于加了0x100(2<sup>8</sup>)。</p>
-<p>TODO：String和Unicode字符；System.out.printf的格式化参数</p>
-
-      </div>
-      
-      
-      
     </div>
-    
-  <ul class="breadcrumb">
-          
-            <li><a href="/custom_source/">CUSTOM_SOURCE</a></li>
-            <li><a href="/custom_source/archives/">ARCHIVES</a></li>
-            <li><a href="/custom_source/archives/%E7%AC%AC3%E7%AB%A0%20Java%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%BB%93%E6%9E%84/">第3章 JAVA的基本程序设计结构</a></li>
-            <li>第3章 JAVA的基本程序设计结构</li>
-          
-  </ul>
 
     
     
     
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Character-encoding/" rel="tag"><i class="fa fa-tag"></i> Character encoding</a>
+              <a href="/tags/Unicode-Transformation-Formats-UTF/" rel="tag"><i class="fa fa-tag"></i> Unicode Transformation Formats(UTF)</a>
+              <a href="/tags/UTF-16/" rel="tag"><i class="fa fa-tag"></i> UTF-16</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/09/01/%E7%AC%AC3%E7%AB%A0%20Java%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%BB%93%E6%9E%84/" rel="prev" title="第3章 Java的基本程序设计结构">
+                  <i class="fa fa-chevron-left"></i> 第3章 Java的基本程序设计结构
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
 
 
       

@@ -46,4 +46,35 @@
         <tag>Java</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Java中的字符编码</title>
+    <url>/2020/09/02/Java%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/</url>
+    <content><![CDATA[<p>&emsp;&emsp;在看<em>Core Java</em>时，看到char类型一节，发现Java中的char与C中的char完全不同，它与Unicode编码有关系。为了弄清楚这个问题，查看了一些资料，记录如下。</p>
+<p>首先是编码问题，通过以下两篇文章有了比较清晰的认识：</p>
+<a href="https://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" title="字符编码笔记：ASCII，Unicode 和 UTF-8" target="_blank">字符编码笔记：ASCII，Unicode 和 UTF-8</a><br>
+
+<a href="https://zhuanlan.zhihu.com/p/46216008" title="程序员必备：彻底弄懂常见的7种中文字符编码" target="_blank">程序员必备：彻底弄懂常见的7种中文字符编码</a>
+
+<p>所以不再赘述。</p>
+<p>再说Java和Unicode的关系。Java采用的是<a href="https://en.wikipedia.org/wiki/UTF-16" title="UTF-16" target="_blank">UTF-16</a>编码方式。顾名思义，UTF-16的基本“单元”是16 bits，称之为代码单元（code unit）。而Unicode中的字符对应的代码值称为码点（code point）。Unicode的码点可以分成17个代码平面（<a href="https://en.wikipedia.org/wiki/Plane_(Unicode)" title="Plane(Unicode)" target="_blank">code plane</a>）。第一个代码平面称为基本多语言平面（Basic Multilingual Plane, BMP），码点范围为U+0000-U+FFFF，每个字符只用16 bits即可表示；其余的平面称为辅助平面（Supplementary Planes），码点范围为U+10000-U+10FFFF，用两个连续的代码单元对（surrogate pair）表示。如何知道一个代码单元代表一个码点，还是某个码点的一半（surrogate）呢？</p>
+<p>在Unicode标准中，BMP平面的U+D800-U+DFFF是没有分配字符的，留给UTF-16编码辅助平面中的字符。U+D800-U+DBFF用于high surrogate，U+DC00-U+DFFF用于low surrogate。具体的算法是（<a href="https://en.wikipedia.org/wiki/UTF-16#Code_points_from_U+010000_to_U+10FFFF" title="UTF-16" target="_blank">wikipedia: UTF-16, 2.2</a>）：</p>
+<ul>
+<li>码点U减去0x10000得U’（0x0-0xFFFFF），表示为20 bits；</li>
+<li>U’的高10 bits（0x0-0x3FF）加到0xD800上作为high surrogate。可以看到这样操作下，high surrogate的范围正好是0xD800–0xDBFF；</li>
+<li>U‘的低10bits加到0xDC00上作为low surrogate，范围为0xDC00-0xDFFFF。</li>
+</ul>
+<p>这样，在UTF-16中，就能简单的区分一个代码单元是BMP中码点还是surrogate。Java中的char类型正是描述了UTF-16编码中的一个代码单元。String在JDK 8及以前使用char[]实现，从JDK 9起使用byte[]实现。不管哪一种实现，String中的length方法返回的是代码单元数量。如果包含两单元字符的话，需要使用codePointCount方法得到码点的数量。使用字符𝕆（U+1D546; \uD835\uDD46）测试：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String s = <span class="string">&quot;𝕆&quot;</span>;</span><br><span class="line">System.out.println(s.length() + <span class="string">&quot; &quot;</span> +</span><br><span class="line">        s.codePointCount(<span class="number">0</span>, s.length()));</span><br></pre></td></tr></table></figure>
+
+<p>结果为：2 1</p>
+]]></content>
+      <categories>
+        <category>foundation</category>
+      </categories>
+      <tags>
+        <tag>Character encoding</tag>
+        <tag>Unicode Transformation Formats(UTF)</tag>
+        <tag>UTF-16</tag>
+      </tags>
+  </entry>
 </search>
