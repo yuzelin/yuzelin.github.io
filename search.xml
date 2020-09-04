@@ -33,8 +33,8 @@
 <img src="/custom_source/images/Byte.toUnsignedInt.png" class="[Byte.toUnsignedInt]">
 
 <p>通过源码的注释可以知道，这样操作后，负数相当于加了0x100(2<sup>8</sup>)。</p>
-<p>有关char类型和String：<a href="https://yuzelin.github.io/2020/09/02/Java%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" title="Java中的字符编码" target="_blank">Java中的字符编码</a></p>
-<p>TODO：System.out.printf的格式化参数</p>
+<p>有关char类型和String：<a href="/2020/09/02/Java%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" title="Java中的字符编码">Java中的字符编码</a> </p>
+<p>有关格式化输出：<a href="/2020/09/03/Java%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA%E7%9A%84%E6%A0%BC%E5%BC%8F%E8%AF%B4%E6%98%8E%E7%AC%A6/" title="Java格式化输出的格式说明符">Java格式化输出的格式说明符</a></p>
 ]]></content>
       <categories>
         <category>Java</category>
@@ -74,6 +74,138 @@
         <tag>Character encoding</tag>
         <tag>Unicode Transformation Formats(UTF)</tag>
         <tag>UTF-16</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java格式化输出的格式说明符</title>
+    <url>/2020/09/03/Java%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA%E7%9A%84%E6%A0%BC%E5%BC%8F%E8%AF%B4%E6%98%8E%E7%AC%A6/</url>
+    <content><![CDATA[<p>&emsp;&emsp;Java 5沿用了C中printf方法，可以为System.out.printf提供格式说明符来控制输出的格式。</p>
+<p>&emsp;&emsp;通过查看PrintStream.printf的源码，追踪到java.util.Formatter类，该类定义了对格式化串的一系列解析方法。这里只看格式说明符相关的定义。首先是格式说明符的格式：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// %[argument_index$][flags][width][.precision][t]conversion</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String formatSpecifier</span><br><span class="line">    = <span class="string">&quot;%(\\d+\\$)?([-#+ 0,(\\&lt;]*)?(\\d+)?(\\.\\d+)?([tT])?([a-zA-Z%])&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;formatSpecifier是格式说明符的正则表达式，通过它本身的内容以及注释可知，格式说明符以’%’开始，后续依次是：</p>
+<ul>
+<li>argument_index-参数索引（可选），后面要加’$’。指定了要格式化的参数索引。注意，这里索引值从1开始，避免了与后面的标志’0’混淆；</li>
+<li>flags-标志（可选）。从正则表达式中可知一共8种，*表明可以有多个标志；</li>
+<li>width-字段宽度（可选）。最少要输出的字符数。不考虑标记的情况下，若字段宽度大于实际宽度则在前面补空格；若小于则按实际宽度输出；</li>
+<li>precision-精度（可选），前面要加’.’。浮点数小数点后保留位数。若精度大于实际位数则在后面补0；若小于则四舍五入；</li>
+<li>t或T（可选）。用于日期时间的格式化，已经过时，现在应该使用java.time中的方法；</li>
+<li>conversion-转换符（必选）。根据正则表达式，这里可以是大小写的字母和%，实际上大部分用于格式化日期时间，必须跟在t后，除去这一部分，共13种。</li>
+</ul>
+<p>&emsp;&emsp;下面对转换符和标志做说明。转换符指示要格式化的数值的类型，在Formatter中的私有类Conversion可以看到所有合法的转换符，在表1中列出：</p>
+<center>表1 用于printf的转换符</center>
+
+<table>
+<thead>
+<tr>
+<th align="left">转换符</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">d</td>
+<td>十进制整数</td>
+</tr>
+<tr>
+<td align="left">o</td>
+<td>八进制整数</td>
+</tr>
+<tr>
+<td align="left">x | X</td>
+<td>十六进制整数</td>
+</tr>
+<tr>
+<td align="left">e | E</td>
+<td>指数浮点数（科学计数法表示）<br />输出中的e的大小写根据转换符决定</td>
+</tr>
+<tr>
+<td align="left">g | G</td>
+<td>通用浮点数（e和f中较短的一个）</td>
+</tr>
+<tr>
+<td align="left">f</td>
+<td>十进制浮点数</td>
+</tr>
+<tr>
+<td align="left">a | A</td>
+<td>十六进制浮点数</td>
+</tr>
+<tr>
+<td align="left">c | C</td>
+<td>字符</td>
+</tr>
+<tr>
+<td align="left">b | B</td>
+<td>布尔（true和false。如果参数不是<br />boolean类型，则参数不为null打印true）</td>
+</tr>
+<tr>
+<td align="left">s | S</td>
+<td>字符串</td>
+</tr>
+<tr>
+<td align="left">h | H</td>
+<td>散列值</td>
+</tr>
+<tr>
+<td align="left">n</td>
+<td>行分隔符</td>
+</tr>
+<tr>
+<td align="left">%</td>
+<td>百分号</td>
+</tr>
+</tbody></table>
+<p>&emsp;&emsp;标志指示输出的外观，在Formatter中的私有类Flags可以看到所有合法的标志，在表2中列出：</p>
+<center>表2 用于printf的标志</center>
+
+<table>
+<thead>
+<tr>
+<th>标志</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-</td>
+<td>左对齐（必须给出字段宽度<br />相当于在后面补不够的空格）</td>
+</tr>
+<tr>
+<td>#</td>
+<td>使用替换形式<br />（根据具体的类型）</td>
+</tr>
+<tr>
+<td>+</td>
+<td>打印正数的’+’号</td>
+</tr>
+<tr>
+<td>空格</td>
+<td>在正数之前添加空格</td>
+</tr>
+<tr>
+<td>0</td>
+<td>数字前面补0（必须给出字段宽度）</td>
+</tr>
+<tr>
+<td>,</td>
+<td>数字添加分组分隔符</td>
+</tr>
+<tr>
+<td>(</td>
+<td>对负数，显示括在括号内的绝对值</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>指示上一个说明的参数</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Core Java Volume Ⅰ</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>readiong notes</tag>
       </tags>
   </entry>
 </search>
