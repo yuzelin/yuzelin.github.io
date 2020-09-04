@@ -1,5 +1,5 @@
 ---
-title: Java格式化输出的转换符和标志
+title: Java格式化输出的格式说明符
 date: 2020-09-03 14:41:01
 tags:
   - Java
@@ -48,7 +48,7 @@ private static final String formatSpecifier
 | n      | 行分隔符                                                     |
 | %      | 百分号                                                       |
 
-&emsp;&emsp;标志指示输出的外观，一个说明符中可以使用多个标志。表2列出所有的标志：
+&emsp;&emsp;标志指示输出的外观，在Formatter中的私有类Flags可以看到所有合法的标志，在表2中列出：
 
 <center>表2 用于printf的标志</center>
 

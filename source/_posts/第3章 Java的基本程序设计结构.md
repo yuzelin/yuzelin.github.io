@@ -27,6 +27,7 @@ categories:
 
 通过源码的注释可以知道，这样操作后，负数相当于加了0x100(2<sup>8</sup>)。
 
-有关char类型和String：{% post_link Java中的字符编码 %}
+有关char类型和String：{% post_link Java中的字符编码 %} 
 
-TODO：System.out.printf的格式化参数
+有关格式化输出：{% post_link Java格式化输出的格式说明符 %}
+
