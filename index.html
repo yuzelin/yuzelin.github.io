@@ -485,10 +485,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-09-02 13:16:57 / Modified: 22:05:32" itemprop="dateCreated datePublished" datetime="2020-09-02T13:16:57+08:00">2020-09-02</time>
+              <time title="Created: 2020-09-02 13:16:57" itemprop="dateCreated datePublished" datetime="2020-09-02T13:16:57+08:00">2020-09-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-09-04 16:36:42" itemprop="dateModified" datetime="2020-09-04T16:36:42+08:00">2020-09-04</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -509,14 +515,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>&emsp;&emsp;在看<em>Core Java</em>时，看到char类型一节，发现Java中的char与C中的char完全不同，它与Unicode编码有关系。为了弄清楚这个问题，查看了一些资料，记录如下。</p>
-<p>首先是编码问题，通过以下两篇文章有了比较清晰的认识：</p>
+<p>&emsp;&emsp;首先是编码问题，通过以下两篇文章有了比较清晰的认识：</p>
 <a href="https://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" title="字符编码笔记：ASCII，Unicode 和 UTF-8" target="_blank">字符编码笔记：ASCII，Unicode 和 UTF-8</a><br>
 
 <a href="https://zhuanlan.zhihu.com/p/46216008" title="程序员必备：彻底弄懂常见的7种中文字符编码" target="_blank">程序员必备：彻底弄懂常见的7种中文字符编码</a>
 
 <p>所以不再赘述。</p>
-<p>再说Java和Unicode的关系。Java采用的是<a href="https://en.wikipedia.org/wiki/UTF-16" title="UTF-16" target="_blank">UTF-16</a>编码方式。顾名思义，UTF-16的基本“单元”是16 bits，称之为代码单元（code unit）。而Unicode中的字符对应的代码值称为码点（code point）。Unicode的码点可以分成17个代码平面（<a href="https://en.wikipedia.org/wiki/Plane_(Unicode)" title="Plane(Unicode)" target="_blank">code plane</a>）。第一个代码平面称为基本多语言平面（Basic Multilingual Plane, BMP），码点范围为U+0000-U+FFFF，每个字符只用16 bits即可表示；其余的平面称为辅助平面（Supplementary Planes），码点范围为U+10000-U+10FFFF，用两个连续的代码单元对（surrogate pair）表示。如何知道一个代码单元代表一个码点，还是某个码点的一半（surrogate）呢？</p>
-<p>在Unicode标准中，BMP平面的U+D800-U+DFFF是没有分配字符的，留给UTF-16编码辅助平面中的字符。U+D800-U+DBFF用于high surrogate，U+DC00-U+DFFF用于low surrogate。具体的算法是（<a href="https://en.wikipedia.org/wiki/UTF-16#Code_points_from_U+010000_to_U+10FFFF" title="UTF-16" target="_blank">wikipedia: UTF-16, 2.2</a>）：</p>
+<p>&emsp;&emsp;再说Java和Unicode的关系。Java采用的是<a href="https://en.wikipedia.org/wiki/UTF-16" title="UTF-16" target="_blank">UTF-16</a>编码方式。顾名思义，UTF-16的基本“单元”是16 bits，称之为代码单元（code unit）。而Unicode中的字符对应的代码值称为码点（code point）。Unicode的码点可以分成17个代码平面（<a href="https://en.wikipedia.org/wiki/Plane_(Unicode)" title="Plane(Unicode)" target="_blank">code plane</a>）。第一个代码平面称为基本多语言平面（Basic Multilingual Plane, BMP），码点范围为U+0000-U+FFFF，每个字符只用16 bits即可表示；其余的平面称为辅助平面（Supplementary Planes），码点范围为U+10000-U+10FFFF，用两个连续的代码单元对（surrogate pair）表示。如何知道一个代码单元代表一个码点，还是某个码点的一半（surrogate）呢？</p>
+<p>&emsp;&emsp;在Unicode标准中，BMP平面的U+D800-U+DFFF是没有分配字符的，留给UTF-16编码辅助平面中的字符。U+D800-U+DBFF用于high surrogate，U+DC00-U+DFFF用于low surrogate。具体的算法是（<a href="https://en.wikipedia.org/wiki/UTF-16#Code_points_from_U+010000_to_U+10FFFF" title="UTF-16" target="_blank">wikipedia: UTF-16, 2.2</a>）：</p>
 <ul>
 <li>码点U减去0x10000得U’（0x0-0xFFFFF），表示为20 bits；</li>
 <li>U’的高10 bits（0x0-0x3FF）加到0xD800上作为high surrogate。可以看到这样操作下，high surrogate的范围正好是0xD800–0xDBFF；</li>
@@ -579,7 +585,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-04 16:25:17" itemprop="dateModified" datetime="2020-09-04T16:25:17+08:00">2020-09-04</time>
+                <time title="Modified: 2020-09-04 16:34:08" itemprop="dateModified" datetime="2020-09-04T16:34:08+08:00">2020-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -604,20 +610,20 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>这是一些零碎的知识点，记录如下：</p>
+          <p>&emsp;&emsp;这是一些零碎的知识点，记录如下：</p>
 <img src="/custom_source/images/%E5%9F%BA%E6%9C%AC%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%BB%93%E6%9E%84.png" class="[基本程序设计结构]">
 
-<p>对其中的unsigned部分，做一个小的记录。以下以8位的byte为例。</p>
-<p>首先是二进制算数运算，计算机内部数字是采用补码的方式存储的，因此，byte变量可以存储0x0-0xff的数，只不过若直接输出，只会输出有符号的形式。对0xff（255），若视为有符号的byte，是-1的补码，则会输出-1：</p>
+<p>&emsp;&emsp;对其中的unsigned部分，做一个小的记录。以下以8位的byte为例。</p>
+<p>&emsp;&emsp;首先是二进制算数运算，计算机内部数字是采用补码的方式存储的，因此，byte变量可以存储0x0-0xff的数，只不过若直接输出，只会输出有符号的形式。对0xff（255），若视为有符号的byte，是-1的补码，则会输出-1：</p>
 <img src="/custom_source/images/%E6%B5%8B%E8%AF%95255.png" class="[测试255]">
 
 <p>所以只要结果不溢出，即大于255，可以将其视为无符号数并进行加减乘的运算。若要得到它的无符号值，可以使用toUnsignedxxx方法；除此之外，可以使用var &amp; 0xff的方法，原理是在进行&amp;操作时，两个操作数隐式的转换到int，0xff的高3字节全部填充0，经过&amp;把var的高3字节置0了，结果将var的补码视为一个正数的原码（正数原码等于补码），起到unsigned的效果。</p>
-<p>通过查看Byte.toUnsignedInt方法的源码，可以看到做法正是这样：</p>
+<p>&emsp;&emsp;通过查看Byte.toUnsignedInt方法的源码，可以看到做法正是这样：</p>
 <img src="/custom_source/images/Byte.toUnsignedInt.png" class="[Byte.toUnsignedInt]">
 
 <p>通过源码的注释可以知道，这样操作后，负数相当于加了0x100(2<sup>8</sup>)。</p>
-<p>有关char类型和String：<a href="/2020/09/02/Java%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" title="Java中的字符编码">Java中的字符编码</a> </p>
-<p>有关格式化输出：<a href="/2020/09/03/Java%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA%E7%9A%84%E6%A0%BC%E5%BC%8F%E8%AF%B4%E6%98%8E%E7%AC%A6/" title="Java格式化输出的格式说明符">Java格式化输出的格式说明符</a></p>
+<p>&emsp;&emsp;有关char类型和String：<a href="/2020/09/02/Java%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" title="Java中的字符编码">Java中的字符编码</a> </p>
+<p>&emsp;&emsp;有关格式化输出：<a href="/2020/09/03/Java%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA%E7%9A%84%E6%A0%BC%E5%BC%8F%E8%AF%B4%E6%98%8E%E7%AC%A6/" title="Java格式化输出的格式说明符">Java格式化输出的格式说明符</a></p>
 
       
     </div>
