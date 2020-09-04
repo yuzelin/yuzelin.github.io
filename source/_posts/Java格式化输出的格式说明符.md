@@ -3,7 +3,7 @@ title: Java格式化输出的格式说明符
 date: 2020-09-03 14:41:01
 tags:
   - Java
-  - readiong notes
+  - reading notes
 categories:
   - Java
   - Core Java Volume Ⅰ
