@@ -208,4 +208,51 @@
         <tag>Java</tag>
       </tags>
   </entry>
+  <entry>
+    <title>第4章 对象与类</title>
+    <url>/2020/09/09/%E7%AC%AC4%E7%AB%A0%20%E5%AF%B9%E8%B1%A1%E4%B8%8E%E7%B1%BB/</url>
+    <content><![CDATA[<h1 id="思维导图"><a href="#思维导图" class="headerlink" title="思维导图"></a>思维导图</h1><p>&emsp;&emsp;本章前面部分是通过实例来讲解的，所以选取了部分知识点，如下：</p>
+<img src="/custom_source/images/%E5%AF%B9%E8%B1%A1%E5%92%8C%E7%B1%BB.png" class="[对象和类]">
+
+<h1 id="字段"><a href="#字段" class="headerlink" title="字段"></a>字段</h1><h2 id="final字段"><a href="#final字段" class="headerlink" title="final字段"></a>final字段</h2><p>&emsp;&emsp;可以将实例字段定义为final。这样的字段必须在构造对象时初始化，i.e. 必须确保在每一个构造器执行之后，这个字段的值已经设置，并且之后不能再修改这个字段。如果final变量是对象变量，只是说明这个变量不能再指向另一个不同的对象，它引用的对象本身可以被修改。</p>
+<h2 id="静态字段"><a href="#静态字段" class="headerlink" title="静态字段"></a>静态字段</h2><p>&emsp;&emsp;如果将一个字段定义为static，每个类只有一个这样的字段。即使没有类对象，静态字段也存在，它属于类。</p>
+<p>&emsp;&emsp;静态变量使用得比较少，静态常量比较常用。</p>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><h2 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h2><p>&emsp;&emsp;静态方法是不在对象上执行的方法。静态方法不能访问非静态的字段，也不能调用非静态的方法，因为它不能再对象上执行操作。下面两种情况下可以使用静态方法：</p>
+<ul>
+<li>方法不需要访问对象状态，因为它需要的所有参数都通过显式参数提供；</li>
+<li>方法只需要访问类的静态字段。</li>
+</ul>
+<h2 id="工厂方法"><a href="#工厂方法" class="headerlink" title="工厂方法"></a>工厂方法</h2><p>&emsp;&emsp;静态方法还有另外一种常见的用途，静态工厂方法构造对象。使用工厂方法有两个好处：</p>
+<ul>
+<li>构造器必须与类同名，有些时候希望不同的方法名体现构造了不同的实例；</li>
+<li>构造器无法改变构造的对象的类型，工厂方法可以返回不同的类型，比如子类。</li>
+</ul>
+<h1 id="方法参数"><a href="#方法参数" class="headerlink" title="方法参数"></a>方法参数</h1><p>&emsp;&emsp;Java总是按值调用。Java方法对参数能做什么和不能做什么：</p>
+<ul>
+<li>不能修改基本数据类型的参数；</li>
+<li>可以改变对象参数的状态（容易让人误解为按引用调用）；</li>
+<li>不能让一个对象参数引用一个新的对象。</li>
+</ul>
+<h1 id="对象构造"><a href="#对象构造" class="headerlink" title="对象构造"></a>对象构造</h1><h2 id="重载-overloading"><a href="#重载-overloading" class="headerlink" title="重载(overloading)"></a>重载(overloading)</h2><p>&emsp;&emsp;多个方法有相同的名字、不同的参数。完整描述一个方法，需要指定方法名和参数类型。返回类型不是方法签名的一部分。构造器的名字和类名相同，多个构造器就是重载的例子。</p>
+<h2 id="默认字段初始化"><a href="#默认字段初始化" class="headerlink" title="默认字段初始化"></a>默认字段初始化</h2><p>&emsp;&emsp;如果构造器没有显式地为字段设置初始值，那么就会被自动地赋为默认值：数值为0、布尔值为false、对象引用为null。这是字段与局部变量的一个重要区别，局部变量必须初始化。</p>
+<h2 id="无参数的构造器"><a href="#无参数的构造器" class="headerlink" title="无参数的构造器"></a>无参数的构造器</h2><p>&emsp;&emsp;如果没有提供构造器，会默认提供一个无参数构造器，这个构造器将所有字段设置为默认值。如果类中提供了构造器但是没有提供无参数的构造器，那么不会提供默认的无参数构造器。如果提供了其他构造器，又希望字段赋默认值，可以提供一个空的构造器。</p>
+<h2 id="显式字段初始化"><a href="#显式字段初始化" class="headerlink" title="显式字段初始化"></a>显式字段初始化</h2><p>&emsp;&emsp;可以在定义时直接为字段赋值。可以利用方法调用进行初始化。</p>
+<h2 id="调用另一个构造器"><a href="#调用另一个构造器" class="headerlink" title="调用另一个构造器"></a>调用另一个构造器</h2><p>&emsp;&emsp;可以使用this(…)来调用另一个构造器。必须写在第一行，因此最多使用一次。</p>
+<h2 id="初始化块"><a href="#初始化块" class="headerlink" title="初始化块"></a>初始化块</h2><p>&emsp;&emsp;可以使用{ }代码块来进行初始化。可以使用静态初始化块来初始化静态字段，方法是在初始化块前加static。在类第一次加载的时候会进行静态字段的初始化。</p>
+<h1 id="包"><a href="#包" class="headerlink" title="包"></a>包</h1><h2 id="类的导入"><a href="#类的导入" class="headerlink" title="类的导入"></a>类的导入</h2><p>&emsp;&emsp;一个类可以使用所属包中的所有类，以及其他包中的公共类。可以采用两种方式访问另一个包中的公共类。第一种是使用完全限定名，就是包名后跟着类名；第二种是使用import语句。</p>
+<h2 id="静态导入"><a href="#静态导入" class="headerlink" title="静态导入"></a>静态导入</h2><p>&emsp;&emsp;import static方式导入静态方法和静态字段。</p>
+<h2 id="在包中添加类"><a href="#在包中添加类" class="headerlink" title="在包中添加类"></a>在包中添加类</h2><p>&emsp;&emsp;使用package 包名，再将源文件放到与包名匹配的子目录中。</p>
+<h2 id="包访问"><a href="#包访问" class="headerlink" title="包访问"></a>包访问</h2><p>&emsp;&emsp;类、方法或变量如果没有指定public和private，可以被同一个包中的所有方法访问。</p>
+<h1 id="JAR文件"><a href="#JAR文件" class="headerlink" title="JAR文件"></a>JAR文件</h1><p>TODO</p>
+<h2 id="文档注释"><a href="#文档注释" class="headerlink" title="文档注释"></a>文档注释</h2><p>TODO</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Core Java Volume Ⅰ</category>
+      </categories>
+      <tags>
+        <tag>reading notes</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
 </search>

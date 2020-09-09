@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/custom_source/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/custom_source/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/custom_source/favicon/favicon-16x16.png">
+  <link rel="mask-icon" href="/custom_source/favicon/safari-pinned-tab.svg" color="#222">
+  <link rel="manifest" href="/custom_source/favicon/site.webmanifest">
+  <meta name="msapplication-config" content="/custom_source/favicon/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="思维导图&amp;emsp;&amp;emsp;本章前面部分是通过实例来讲解的，所以选取了部分知识点，如下：   字段final字段&amp;emsp;&amp;emsp;可以将实例字段定义为final。这样的字段必须在构造对象时初始化，i.e. 必须确保在每一个构造器执行之后，这个字段的值已经设置，并且之后不能再修改这个字段。如果final变量是对象变量，只是说明这个变量不能再指向另一个不同的对象，它引用的对象本身可以被修改。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="第4章 对象与类">
+<meta property="og:url" content="http://yoursite.com/custom_source/archives/%E7%AC%AC4%E7%AB%A0%20%E5%AF%B9%E8%B1%A1%E4%B8%8E%E7%B1%BB/%E7%AC%AC4%E7%AB%A0%20%E5%AF%B9%E8%B1%A1%E4%B8%8E%E7%B1%BB.html">
+<meta property="og:site_name" content="Yu Zelin&#39;s Learning Notes">
+<meta property="og:description" content="思维导图&amp;emsp;&amp;emsp;本章前面部分是通过实例来讲解的，所以选取了部分知识点，如下：   字段final字段&amp;emsp;&amp;emsp;可以将实例字段定义为final。这样的字段必须在构造对象时初始化，i.e. 必须确保在每一个构造器执行之后，这个字段的值已经设置，并且之后不能再修改这个字段。如果final变量是对象变量，只是说明这个变量不能再指向另一个不同的对象，它引用的对象本身可以被修改。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/custom_source/images/%E5%AF%B9%E8%B1%A1%E5%92%8C%E7%B1%BB.png">
+<meta property="article:published_time" content="2020-09-09T08:37:26.000Z">
+<meta property="article:modified_time" content="2020-09-09T12:06:01.996Z">
+<meta property="article:author" content="Yu Zelin">
+<meta property="article:tag" content="reading notes">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/custom_source/images/%E5%AF%B9%E8%B1%A1%E5%92%8C%E7%B1%BB.png">
+
+
+<link rel="canonical" href="http://yoursite.com/custom_source/archives/%E7%AC%AC4%E7%AB%A0%20%E5%AF%B9%E8%B1%A1%E4%B8%8E%E7%B1%BB/%E7%AC%AC4%E7%AB%A0%20%E5%AF%B9%E8%B1%A1%E4%B8%8E%E7%B1%BB">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>第4章 对象与类 | Yu Zelin's Learning Notes
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Sidere mens eadem mutato</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div class="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">思维导图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%97%E6%AE%B5"><span class="nav-number">2.</span> <span class="nav-text">字段</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#final%E5%AD%97%E6%AE%B5"><span class="nav-number">2.1.</span> <span class="nav-text">final字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%AD%97%E6%AE%B5"><span class="nav-number">2.2.</span> <span class="nav-text">静态字段</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">静态方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">工厂方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">方法参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E6%9E%84%E9%80%A0"><span class="nav-number">5.</span> <span class="nav-text">对象构造</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD-overloading"><span class="nav-number">5.1.</span> <span class="nav-text">重载(overloading)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E5%AD%97%E6%AE%B5%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">5.2.</span> <span class="nav-text">默认字段初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E5%8F%82%E6%95%B0%E7%9A%84%E6%9E%84%E9%80%A0%E5%99%A8"><span class="nav-number">5.3.</span> <span class="nav-text">无参数的构造器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E5%BC%8F%E5%AD%97%E6%AE%B5%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">5.4.</span> <span class="nav-text">显式字段初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%E5%8F%A6%E4%B8%80%E4%B8%AA%E6%9E%84%E9%80%A0%E5%99%A8"><span class="nav-number">5.5.</span> <span class="nav-text">调用另一个构造器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%9D%97"><span class="nav-number">5.6.</span> <span class="nav-text">初始化块</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8C%85"><span class="nav-number">6.</span> <span class="nav-text">包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E5%AF%BC%E5%85%A5"><span class="nav-number">6.1.</span> <span class="nav-text">类的导入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%AF%BC%E5%85%A5"><span class="nav-number">6.2.</span> <span class="nav-text">静态导入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E5%8C%85%E4%B8%AD%E6%B7%BB%E5%8A%A0%E7%B1%BB"><span class="nav-number">6.3.</span> <span class="nav-text">在包中添加类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%85%E8%AE%BF%E9%97%AE"><span class="nav-number">6.4.</span> <span class="nav-text">包访问</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JAR%E6%96%87%E4%BB%B6"><span class="nav-number">7.</span> <span class="nav-text">JAR文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%A1%A3%E6%B3%A8%E9%87%8A"><span class="nav-number">7.1.</span> <span class="nav-text">文档注释</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Yu Zelin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner page posts-expand">
+      
+  
+  
+
+      
+
+    
+    
+    
+    <div class="post-block" lang="en">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">第4章 对象与类
+</h1>
+
+<div class="post-meta">
+  
+  <ul class="breadcrumb">
+          
+            <li><a href="/custom_source/">CUSTOM_SOURCE</a></li>
+            <li><a href="/custom_source/archives/">ARCHIVES</a></li>
+            <li><a href="/custom_source/archives/%E7%AC%AC4%E7%AB%A0%20%E5%AF%B9%E8%B1%A1%E4%B8%8E%E7%B1%BB/">第4章 对象与类</a></li>
+            <li>第4章 对象与类</li>
+          
+  </ul>
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h1 id="思维导图"><a href="#思维导图" class="headerlink" title="思维导图"></a>思维导图</h1><p>&emsp;&emsp;本章前面部分是通过实例来讲解的，所以选取了部分知识点，如下：</p>
+<img src="/custom_source/images/%E5%AF%B9%E8%B1%A1%E5%92%8C%E7%B1%BB.png" class="[对象和类]">
+
+<h1 id="字段"><a href="#字段" class="headerlink" title="字段"></a>字段</h1><h2 id="final字段"><a href="#final字段" class="headerlink" title="final字段"></a>final字段</h2><p>&emsp;&emsp;可以将实例字段定义为final。这样的字段必须在构造对象时初始化，i.e. 必须确保在每一个构造器执行之后，这个字段的值已经设置，并且之后不能再修改这个字段。如果final变量是对象变量，只是说明这个变量不能再指向另一个不同的对象，它引用的对象本身可以被修改。</p>
+<h2 id="静态字段"><a href="#静态字段" class="headerlink" title="静态字段"></a>静态字段</h2><p>&emsp;&emsp;如果将一个字段定义为static，每个类只有一个这样的字段。即使没有类对象，静态字段也存在，它属于类。</p>
+<p>&emsp;&emsp;静态变量使用得比较少，静态常量比较常用。</p>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><h2 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h2><p>&emsp;&emsp;静态方法是不在对象上执行的方法。静态方法不能访问非静态的字段，也不能调用非静态的方法，因为它不能再对象上执行操作。下面两种情况下可以使用静态方法：</p>
+<ul>
+<li>方法不需要访问对象状态，因为它需要的所有参数都通过显式参数提供；</li>
+<li>方法只需要访问类的静态字段。</li>
+</ul>
+<h2 id="工厂方法"><a href="#工厂方法" class="headerlink" title="工厂方法"></a>工厂方法</h2><p>&emsp;&emsp;静态方法还有另外一种常见的用途，静态工厂方法构造对象。使用工厂方法有两个好处：</p>
+<ul>
+<li>构造器必须与类同名，有些时候希望不同的方法名体现构造了不同的实例；</li>
+<li>构造器无法改变构造的对象的类型，工厂方法可以返回不同的类型，比如子类。</li>
+</ul>
+<h1 id="方法参数"><a href="#方法参数" class="headerlink" title="方法参数"></a>方法参数</h1><p>&emsp;&emsp;Java总是按值调用。Java方法对参数能做什么和不能做什么：</p>
+<ul>
+<li>不能修改基本数据类型的参数；</li>
+<li>可以改变对象参数的状态（容易让人误解为按引用调用）；</li>
+<li>不能让一个对象参数引用一个新的对象。</li>
+</ul>
+<h1 id="对象构造"><a href="#对象构造" class="headerlink" title="对象构造"></a>对象构造</h1><h2 id="重载-overloading"><a href="#重载-overloading" class="headerlink" title="重载(overloading)"></a>重载(overloading)</h2><p>&emsp;&emsp;多个方法有相同的名字、不同的参数。完整描述一个方法，需要指定方法名和参数类型。返回类型不是方法签名的一部分。构造器的名字和类名相同，多个构造器就是重载的例子。</p>
+<h2 id="默认字段初始化"><a href="#默认字段初始化" class="headerlink" title="默认字段初始化"></a>默认字段初始化</h2><p>&emsp;&emsp;如果构造器没有显式地为字段设置初始值，那么就会被自动地赋为默认值：数值为0、布尔值为false、对象引用为null。这是字段与局部变量的一个重要区别，局部变量必须初始化。</p>
+<h2 id="无参数的构造器"><a href="#无参数的构造器" class="headerlink" title="无参数的构造器"></a>无参数的构造器</h2><p>&emsp;&emsp;如果没有提供构造器，会默认提供一个无参数构造器，这个构造器将所有字段设置为默认值。如果类中提供了构造器但是没有提供无参数的构造器，那么不会提供默认的无参数构造器。如果提供了其他构造器，又希望字段赋默认值，可以提供一个空的构造器。</p>
+<h2 id="显式字段初始化"><a href="#显式字段初始化" class="headerlink" title="显式字段初始化"></a>显式字段初始化</h2><p>&emsp;&emsp;可以在定义时直接为字段赋值。可以利用方法调用进行初始化。</p>
+<h2 id="调用另一个构造器"><a href="#调用另一个构造器" class="headerlink" title="调用另一个构造器"></a>调用另一个构造器</h2><p>&emsp;&emsp;可以使用this(…)来调用另一个构造器。必须写在第一行，因此最多使用一次。</p>
+<h2 id="初始化块"><a href="#初始化块" class="headerlink" title="初始化块"></a>初始化块</h2><p>&emsp;&emsp;可以使用{ }代码块来进行初始化。可以使用静态初始化块来初始化静态字段，方法是在初始化块前加static。在类第一次加载的时候会进行静态字段的初始化。</p>
+<h1 id="包"><a href="#包" class="headerlink" title="包"></a>包</h1><h2 id="类的导入"><a href="#类的导入" class="headerlink" title="类的导入"></a>类的导入</h2><p>&emsp;&emsp;一个类可以使用所属包中的所有类，以及其他包中的公共类。可以采用两种方式访问另一个包中的公共类。第一种是使用完全限定名，就是包名后跟着类名；第二种是使用import语句。</p>
+<h2 id="静态导入"><a href="#静态导入" class="headerlink" title="静态导入"></a>静态导入</h2><p>&emsp;&emsp;import static方式导入静态方法和静态字段。</p>
+<h2 id="在包中添加类"><a href="#在包中添加类" class="headerlink" title="在包中添加类"></a>在包中添加类</h2><p>&emsp;&emsp;使用package 包名，再将源文件放到与包名匹配的子目录中。</p>
+<h2 id="包访问"><a href="#包访问" class="headerlink" title="包访问"></a>包访问</h2><p>&emsp;&emsp;类、方法或变量如果没有指定public和private，可以被同一个包中的所有方法访问。</p>
+<h1 id="JAR文件"><a href="#JAR文件" class="headerlink" title="JAR文件"></a>JAR文件</h1><p>TODO</p>
+<h2 id="文档注释"><a href="#文档注释" class="headerlink" title="文档注释"></a>文档注释</h2><p>TODO</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+  <ul class="breadcrumb">
+          
+            <li><a href="/custom_source/">CUSTOM_SOURCE</a></li>
+            <li><a href="/custom_source/archives/">ARCHIVES</a></li>
+            <li><a href="/custom_source/archives/%E7%AC%AC4%E7%AB%A0%20%E5%AF%B9%E8%B1%A1%E4%B8%8E%E7%B1%BB/">第4章 对象与类</a></li>
+            <li>第4章 对象与类</li>
+          
+  </ul>
+
+    
+    
+    
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class=""></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yu Zelin</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+      
+
+
+
+
+
+
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
