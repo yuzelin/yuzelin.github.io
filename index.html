@@ -214,7 +214,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -258,6 +258,97 @@
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/14/post/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Yu Zelin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yu Zelin's Learning Notes">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/14/post/" class="post-title-link" itemprop="url">第5章 继承</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-09-14 21:55:52" itemprop="dateCreated datePublished" datetime="2020-09-14T21:55:52+08:00">2020-09-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-09-15 14:41:58" itemprop="dateModified" datetime="2020-09-15T14:41:58+08:00">2020-09-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Core-Java-Volume-%E2%85%A0/" itemprop="url" rel="index"><span itemprop="name">Core Java Volume Ⅰ</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="类、超类和子类"><a href="#类、超类和子类" class="headerlink" title="类、超类和子类"></a>类、超类和子类</h1><h2 id="定义子类"><a href="#定义子类" class="headerlink" title="定义子类"></a>定义子类</h2><p>&emsp;&emsp;使用<strong>extends</strong>表示继承，表明正在构造的新类派生于于一个已存在的类。这个已存在的类称为超类，新类称为子类。</p>
+<h2 id="覆盖方法"><a href="#覆盖方法" class="headerlink" title="覆盖方法"></a>覆盖方法</h2><p>&emsp;&emsp;子类不能直接访问父类的私有字段，可以使用相应的get方法访问，此时用<strong>super.xxx</strong>代表访问父类的方法。super是指示编译器调用超类方法的关键字，并不是如同this一样的引用。</p>
+<p>​    为了避免覆盖父类方法时，由于参数类型写错而未覆盖的错误，使用**@override**标记子类方法，这样在错误的时候编译器会报告错误。</p>
+<p>&emsp;&emsp;在覆盖方法时，子类方法不能低于超类方法的可见性。</p>
+<h2 id="子类构造器"><a href="#子类构造器" class="headerlink" title="子类构造器"></a>子类构造器</h2><p>&emsp;&emsp;子类构造器第一行需要使用super关键字来调用超类的构造器，而且必须是子类构造器的第一条语句，除非该构造器第一行使用this调用另一个子类构造器（在进入另一个子类构造器后，第一条语句同样是super(…)或者this(…)，这样最终还是会首先执行父类构造器）。</p>
+<p>&emsp;&emsp;如果子类构造器没有显式地调用超类的构造器，将自动地调用超类的无参数构造器。如果超类没有无参数构造器，则会编译错误。</p>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>&emsp;&emsp;一个对象变量可以指示多种实际类型的现象称为多态。在运行时能够自动地选择适当的方法称为动态绑定。</p>
+<p>&emsp;&emsp;一个超类对象变量可以引用任意一个子类对象，不能将超类的引用直接赋给子类变量。</p>
+<h2 id="阻止继承：final类和方法"><a href="#阻止继承：final类和方法" class="headerlink" title="阻止继承：final类和方法"></a>阻止继承：final类和方法</h2><p>&emsp;&emsp;不允许扩展的类被称为final类。类中的方法也可以被声明为final，子类不能覆盖这个方法（final类中的所有方法自动地成为final方法）。</p>
+<h2 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h2><p>&emsp;&emsp;当超类的对象变量确实引用的是子类对象，可以进行强制类型转换，否则强制类型转换将会抛出异常。可以使用<strong>instanceof</strong>检查引用的对象是否是该类的实例。</p>
+<h2 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h2><p>&emsp;&emsp;类中不需要实现的方法可以使用<strong>abstract</strong>声明为抽象方法。包含一个或多个抽象方法的类必须声明为抽象。当然，不含抽象方法也可以将类声明为抽象类。</p>
+<p>&emsp;&emsp;抽象方法起占位作用，在子类中具体实现。扩展抽象类时，要么保留抽象方法，将子类也标记为抽象类；要么定义全部的方法。</p>
+<p>&emsp;&emsp;抽象类不能实例化，但可以创建对象变量。</p>
+<h2 id="受保护访问"><a href="#受保护访问" class="headerlink" title="受保护访问"></a>受保护访问</h2>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
