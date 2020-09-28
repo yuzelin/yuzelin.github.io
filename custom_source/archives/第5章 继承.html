@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/custom_source/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/custom_source/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/custom_source/favicon/favicon-16x16.png">
+  <link rel="mask-icon" href="/custom_source/favicon/safari-pinned-tab.svg" color="#222">
+  <link rel="manifest" href="/custom_source/favicon/site.webmanifest">
+  <meta name="msapplication-config" content="/custom_source/favicon/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="类、超类和子类定义子类&amp;emsp;&amp;emsp;使用extends表示继承，表明正在构造的新类派生于于一个已存在的类。这个已存在的类称为超类，新类称为子类。 覆盖方法&amp;emsp;&amp;emsp;子类不能直接访问父类的私有字段，可以使用相应的get方法访问，此时用super.xxx代表访问父类的方法。super是指示编译器调用超类方法的关键字，并不是如同this一样的引用。 &amp;emsp;&amp;emsp;为了避">
+<meta property="og:type" content="website">
+<meta property="og:title" content="第5章 继承">
+<meta property="og:url" content="http://yoursite.com/custom_source/archives/%E7%AC%AC5%E7%AB%A0%20%E7%BB%A7%E6%89%BF.html">
+<meta property="og:site_name" content="Yu Zelin&#39;s Learning Notes">
+<meta property="og:description" content="类、超类和子类定义子类&amp;emsp;&amp;emsp;使用extends表示继承，表明正在构造的新类派生于于一个已存在的类。这个已存在的类称为超类，新类称为子类。 覆盖方法&amp;emsp;&amp;emsp;子类不能直接访问父类的私有字段，可以使用相应的get方法访问，此时用super.xxx代表访问父类的方法。super是指示编译器调用超类方法的关键字，并不是如同this一样的引用。 &amp;emsp;&amp;emsp;为了避">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-14T13:55:52.000Z">
+<meta property="article:modified_time" content="2020-09-28T08:19:31.639Z">
+<meta property="article:author" content="Yu Zelin">
+<meta property="article:tag" content="reading notes">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/custom_source/archives/%E7%AC%AC5%E7%AB%A0%20%E7%BB%A7%E6%89%BF">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>第5章 继承 | Yu Zelin's Learning Notes
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Sidere mens eadem mutato</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div class="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B1%BB%E3%80%81%E8%B6%85%E7%B1%BB%E5%92%8C%E5%AD%90%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">类、超类和子类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E5%AD%90%E7%B1%BB"><span class="nav-number">1.1.</span> <span class="nav-text">定义子类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A6%86%E7%9B%96%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">覆盖方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%90%E7%B1%BB%E6%9E%84%E9%80%A0%E5%99%A8"><span class="nav-number">1.3.</span> <span class="nav-text">子类构造器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%80%81"><span class="nav-number">1.4.</span> <span class="nav-text">多态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%BB%E6%AD%A2%E7%BB%A7%E6%89%BF%EF%BC%9Afinal%E7%B1%BB%E5%92%8C%E6%96%B9%E6%B3%95"><span class="nav-number">1.5.</span> <span class="nav-text">阻止继承：final类和方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.6.</span> <span class="nav-text">强制类型转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="nav-number">1.7.</span> <span class="nav-text">抽象类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%97%E4%BF%9D%E6%8A%A4%E8%AE%BF%E9%97%AE"><span class="nav-number">1.8.</span> <span class="nav-text">受保护访问</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Object%EF%BC%9A%E6%89%80%E6%9C%89%E7%B1%BB%E7%9A%84%E8%B6%85%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">Object：所有类的超类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Object%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%98%E9%87%8F"><span class="nav-number">2.1.</span> <span class="nav-text">Object类型的变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#equals%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">equals方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%8C%85%E8%A3%85%E5%99%A8%E4%B8%8E%E8%87%AA%E5%8A%A8%E8%A3%85%E7%AE%B1"><span class="nav-number">3.</span> <span class="nav-text">对象包装器与自动装箱</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E6%95%B0%E9%87%8F%E5%8F%AF%E5%8F%98%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">参数数量可变的方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E7%B1%BB"><span class="nav-number">5.</span> <span class="nav-text">枚举类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84"><span class="nav-number">6.</span> <span class="nav-text">反射</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Yu Zelin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner page posts-expand">
+      
+  
+  
+
+      
+
+    
+    
+    
+    <div class="post-block" lang="en">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">第5章 继承
+</h1>
+
+<div class="post-meta">
+  
+  <ul class="breadcrumb">
+          
+            <li><a href="/custom_source/">CUSTOM_SOURCE</a></li>
+            <li><a href="/custom_source/archives/">ARCHIVES</a></li>
+            <li>第5章 继承</li>
+          
+  </ul>
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h1 id="类、超类和子类"><a href="#类、超类和子类" class="headerlink" title="类、超类和子类"></a>类、超类和子类</h1><h2 id="定义子类"><a href="#定义子类" class="headerlink" title="定义子类"></a>定义子类</h2><p>&emsp;&emsp;使用<strong>extends</strong>表示继承，表明正在构造的新类派生于于一个已存在的类。这个已存在的类称为超类，新类称为子类。</p>
+<h2 id="覆盖方法"><a href="#覆盖方法" class="headerlink" title="覆盖方法"></a>覆盖方法</h2><p>&emsp;&emsp;子类不能直接访问父类的私有字段，可以使用相应的get方法访问，此时用<strong>super.xxx</strong>代表访问父类的方法。super是指示编译器调用超类方法的关键字，并不是如同this一样的引用。</p>
+<p>&emsp;&emsp;为了避免覆盖父类方法时，由于参数类型写错而未覆盖的错误，使用**@override**标记子类方法，这样在错误的时候编译器会报告错误。</p>
+<p>&emsp;&emsp;在覆盖方法时，子类方法不能低于超类方法的可见性。</p>
+<h2 id="子类构造器"><a href="#子类构造器" class="headerlink" title="子类构造器"></a>子类构造器</h2><p>&emsp;&emsp;子类构造器第一行需要使用super关键字来调用超类的构造器，而且必须是子类构造器的第一条语句，除非该构造器第一行使用this调用另一个子类构造器（在进入另一个子类构造器后，第一条语句同样是super(…)或者this(…)，这样最终还是会首先执行父类构造器）。</p>
+<p>&emsp;&emsp;如果子类构造器没有显式地调用超类的构造器，将自动地调用超类的无参数构造器。如果超类没有无参数构造器，则会编译错误。</p>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>&emsp;&emsp;一个对象变量可以指示多种实际类型的现象称为多态。在运行时能够自动地选择适当的方法称为动态绑定。</p>
+<p>&emsp;&emsp;一个超类对象变量可以引用任意一个子类对象，不能将超类的引用直接赋给子类变量。</p>
+<h2 id="阻止继承：final类和方法"><a href="#阻止继承：final类和方法" class="headerlink" title="阻止继承：final类和方法"></a>阻止继承：final类和方法</h2><p>&emsp;&emsp;不允许扩展的类被称为final类。类中的方法也可以被声明为final，子类不能覆盖这个方法（final类中的所有方法自动地成为final方法）。</p>
+<h2 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h2><p>&emsp;&emsp;当超类的对象变量确实引用的是子类对象，可以进行强制类型转换，否则强制类型转换将会抛出异常。可以使用<strong>instanceof</strong>检查引用的对象是否是该类的实例。</p>
+<h2 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h2><p>&emsp;&emsp;类中不需要实现的方法可以使用<strong>abstract</strong>声明为抽象方法。包含一个或多个抽象方法的类必须声明为抽象。当然，不含抽象方法也可以将类声明为抽象类。</p>
+<p>&emsp;&emsp;抽象方法起占位作用，在子类中具体实现。扩展抽象类时，要么保留抽象方法，将子类也标记为抽象类；要么定义全部的方法。</p>
+<p>&emsp;&emsp;抽象类不能实例化，但可以创建对象变量。</p>
+<h2 id="受保护访问"><a href="#受保护访问" class="headerlink" title="受保护访问"></a>受保护访问</h2><p>&emsp;&emsp;如果希望超类中的某个方法或字段允许子类访问，可以声明为<strong>protected</strong>。受保护部分对所有子类及同一个包中的类可见。</p>
+<p>&emsp;&emsp;对Java中4个访问控制修饰符做个小结：</p>
+<ul>
+<li>private：仅对本类可见</li>
+<li>public：对外部完全可见</li>
+<li>protected：对本包和所有子类可见</li>
+<li>默认（无修饰符）：对本包可见</li>
+</ul>
+<h1 id="Object：所有类的超类"><a href="#Object：所有类的超类" class="headerlink" title="Object：所有类的超类"></a>Object：所有类的超类</h1><p>&emsp;&emsp;Object类是Java中所有类的始祖，如果没有明确指出超类，则默认扩展Object。</p>
+<h2 id="Object类型的变量"><a href="#Object类型的变量" class="headerlink" title="Object类型的变量"></a>Object类型的变量</h2><p>&emsp;&emsp;可以使用Object类型的变量引用任何类型的对象。Java中只有基本类型不是对象，所有数组类型都是类。</p>
+<h2 id="equals方法"><a href="#equals方法" class="headerlink" title="equals方法"></a>equals方法</h2><p>&emsp;&emsp;编写一个完美的equals方法的建议：</p>
+<ol>
+<li>显式参数命名为otherObject，稍后需要将它强制转换成另一个名为other的变量</li>
+<li>检测this与otherObject是否相等：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">this</span> == otherObject) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>检测otherObject是否为null，如果为null，返回false</li>
+<li>比较this与otherObject的类。如果equals的语义可以在子类中改变，就使用getClass检测：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (getClass() != otherObject.getClass()) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br></pre></td></tr></table></figure>
+
+<p>如果所有的子类都有相同的相等性语义，可以使用instanceof检测：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!(otherObject <span class="keyword">instanceof</span> ClassName)) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>将otherObject强制转换为相应类型的变量：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ClassName other = (ClassName) otherObject;</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>现在根据相等性概念的要求来比较字段。使用 == 来比较基本类型字段，使用Objects.equals比较对象字段，使用Arrays.equals方法比较数组元素：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> field1 == other.field1 </span><br><span class="line">    &amp;&amp; Objects.equals(field2, other.field2) </span><br><span class="line">    &amp;&amp; ...;</span><br></pre></td></tr></table></figure>
+
+<p>如果在子类中重新定义equals，就要在其中包含一个super.equals(other)调用。</p>
+<h1 id="对象包装器与自动装箱"><a href="#对象包装器与自动装箱" class="headerlink" title="对象包装器与自动装箱"></a>对象包装器与自动装箱</h1><p>&emsp;&emsp;所有基本类型都有一个对应的类，i.e. 包装器。包装器是不可变、final的。</p>
+<p>&emsp;&emsp;在使用泛型类的时候，尖括号中的类型参数是不能为基本类型的，这时就可以使用包装器。</p>
+<p>&emsp;&emsp;在需要使用包装器的地方也可以直接使用基本类型值，此时会自动调用相应的方法将值包装到包装器类中，这个特性就是<strong>自动装箱</strong>；相反的，将一个包装器对象赋给一个基本类型值时，将会<strong>自动拆箱</strong>。这两个特性也适用于算术表达式，并且隐式类型转换也会起作用。</p>
+<h1 id="参数数量可变的方法"><a href="#参数数量可变的方法" class="headerlink" title="参数数量可变的方法"></a>参数数量可变的方法</h1><p>&emsp;&emsp;使用<em>Type… args</em>表示能够接收任意数量的参数，只能够是参数列表中最后一个参数。编译器会自动将所有参数绑定到数组中，i.e. 它和<em>Type[] args</em>完全一样，在使用时也可以直接传递数组。如果一个已有方法的最后一个参数是数组，可以把它重新定义为有可变参数的方法，而不影响兼容性。</p>
+<h1 id="枚举类"><a href="#枚举类" class="headerlink" title="枚举类"></a>枚举类</h1><p>&emsp;&emsp;形式：<em>enum Name {e1, e2, …}</em> 实际上定义了一个类，它刚好只有大括号中那么多个实例，不能构造新的对象（因此在比较两个枚举类型的值时，直接使用 == 即可）。</p>
+<p>&emsp;&emsp;可以为枚举类型增加构造器（构造器总是private的）、方法和字段。构造器只能在大括号中构造枚举常量时调用。</p>
+<p>&emsp;&emsp;所有的枚举类型都是Enum的子类，有很多实用的方法。</p>
+<h1 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h1><p>&emsp;&emsp;这里不深入了解。</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+  <ul class="breadcrumb">
+          
+            <li><a href="/custom_source/">CUSTOM_SOURCE</a></li>
+            <li><a href="/custom_source/archives/">ARCHIVES</a></li>
+            <li>第5章 继承</li>
+          
+  </ul>
+
+    
+    
+    
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class=""></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yu Zelin</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+      
+
+
+
+
+
+
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
