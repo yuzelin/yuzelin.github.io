@@ -90,5 +90,9 @@ categories:
 
 ## 变量作用阈
 
-&emsp;&emsp;lambda表达式可以捕获外围作用域
+&emsp;&emsp;lambda表达式可以捕获外围作用域中变量的值。lambda表达式中捕获的变量必须是事实最终变量，即这个变量在初始化后就不会再赋新值。
+
+&emsp;&emsp;在lambda表达式中使用this关键字时，是指创建这个lambda表达式的方法的this参数。
+
+# 内部类
 
