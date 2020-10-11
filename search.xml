@@ -374,7 +374,11 @@
 
 <p>&emsp;&emsp;它的含义是创建一个类的新对象，这个类实现了SuperType（SuperType是接口）或扩展了SuperType（SuperType是类），大括号内是需要实现的方法、其他方法和字段。</p>
 <p>&emsp;&emsp;由于构造器的名字必须与类名相同，而匿名内部类没有名字，故匿名内部类不能有构造器。实际上，构造参数要传递给超类构造器。如果内部类是实现一个接口，就不能有构造参数。可以提供一个初始化块。</p>
-<h2 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h2><p>&emsp;&emsp;如果使用内部类只是为了把一个类隐藏在另一个类的内部，并不需要</p>
+<h2 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h2><p>&emsp;&emsp;如果使用内部类只是为了把一个类隐藏在另一个类的内部，并不需要内部类有外围类的一个引用，可以将内部类声明为static。</p>
+<p>&emsp;&emsp;静态内部类可以有静态字段和方法。</p>
+<p>&emsp;&emsp;在接口中声明的内部类自动是static。</p>
+<h2 id="服务加载器"><a href="#服务加载器" class="headerlink" title="服务加载器"></a>服务加载器</h2><p>&emsp;&emsp;不深入了解。</p>
+<h1 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h1><p>&emsp;&emsp;不深入了解。</p>
 ]]></content>
       <categories>
         <category>Java</category>
