@@ -68,7 +68,7 @@
 <p>结果为：2 1</p>
 ]]></content>
       <categories>
-        <category>foundation</category>
+        <category>Fundamental Knowledge of CS</category>
       </categories>
       <tags>
         <tag>Character encoding</tag>
@@ -326,8 +326,36 @@
       </tags>
   </entry>
   <entry>
+    <title>第7章 异常、断言和日志</title>
+    <url>/2020/10/11/post/</url>
+    <content><![CDATA[<h1 id="处理错误"><a href="#处理错误" class="headerlink" title="处理错误"></a>处理错误</h1>]]></content>
+      <categories>
+        <category>Java</category>
+        <category>Core Java Volume Ⅰ</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Reading notes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>post</title>
+    <url>/2020/10/14/post-1/</url>
+    <content><![CDATA[<p>to be continued</p>
+]]></content>
+      <categories>
+        <category>LeetCode Solution</category>
+        <category>AlgorithmXX</category>
+      </categories>
+      <tags>
+        <tag>LeetCode Solution</tag>
+        <tag>AlgorithmXX(LeetCode)</tag>
+        <tag>Easy(LeetCode)</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>第6章 接口、lambda表达式与内部类</title>
-    <url>/2020/10/10/post/</url>
+    <url>/2020/10/10/%E7%AC%AC6%E7%AB%A0%20%E6%8E%A5%E5%8F%A3%E3%80%81lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E5%86%85%E9%83%A8%E7%B1%BB/</url>
     <content><![CDATA[<h1 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h1><h2 id="接口的概念"><a href="#接口的概念" class="headerlink" title="接口的概念"></a>接口的概念</h2><p>&emsp;&emsp;接口不是类，而是对希望符合这个接口的类的一组<strong>需求</strong>。关键字<strong>interface</strong>。</p>
 <p>&emsp;&emsp;接口中的所有方法自动是public，因此在声明时不必提供关键字。</p>
 <p>&emsp;&emsp;接口可以包含多个方法；接口可以定义常量，自动是public static final；接口不能有实例字段；Java 8之前接口不能实现方法。</p>
