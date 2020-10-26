@@ -6,7 +6,7 @@ tags:
   - Unicode Transformation Formats(UTF)
   - UTF-16
 categories:
-  - foundation
+  - Fundamental Knowledge of CS
 ---
 
 &emsp;&emsp;在看*Core Java*时，看到char类型一节，发现Java中的char与C中的char完全不同，它与Unicode编码有关系。为了弄清楚这个问题，查看了一些资料，记录如下。
